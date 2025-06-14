@@ -1,0 +1,30 @@
+@startuml "system-context-diagram"
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+' People
+Person(teamMember, "Team Member", "Uses Mirai to manage work items, boards, and documentation.")
+Person(scrumMaster, "Scrum Master", "Leads sprints and retrospectives using Mirai.")
+Person(admin, "Administrator", "Manages users, teams, and roles.")
+
+' System
+System(mirai, "Mirai", "Web-based project management tool for Agile teams.")
+
+' External Systems
+System_Ext(keycloak, "Keycloak", "Manages user authentication and authorization.")
+System_Ext(emailService, "Email System", "Sends transactional and notification emails.")
+System_Ext(signalR, "Azure SignalR Service", "Handles real-time updates across distributed clients.")
+System_Ext(blob, "Azure Blob Storage", "Stores uploaded files, images, and attachments.")
+
+' Relationships
+Rel(teamMember, mirai, "Uses")
+Rel(scrumMaster, mirai, "Uses")
+Rel(admin, mirai, "Manages and configures")
+
+Rel(mirai, keycloak, "Authenticates via")
+Rel(mirai, emailService, "Sends emails via")
+Rel(mirai, signalR, "Pushes real-time updates via")
+Rel(mirai, blob, "Stores and retrieves files from")
+
+@enduml

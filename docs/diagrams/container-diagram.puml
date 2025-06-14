@@ -1,0 +1,42 @@
+@startuml "container-diagram"
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+' Define users
+Person(user, "Mirai User", "Uses Mirai to manage projects, boards, wiki pages, and retrospectives")
+
+' Define Mirai system boundary and containers
+System_Boundary(miraiBoundary, "Mirai") {
+  Container(webApp, "Web Application", "Container:", "Delivers the static content and the Mirai single page application")
+  Container(spa, "Single-Page Application", "Container: JavaScript and Vue.js", "Provides all of the project management functionalities to users via their web browser")
+  Container(api, "API Application", "Container: C# and .NET 9", "Provides project management functionalities via a RESTful API")
+  Container(db, "Database", "Container: PostgreSQL", "Stores users, projects, work items, wiki pages, retrospectives, etc.")
+  Container(redisCache, "Cache Store", "Container: Redis", "Caches frequent queries to improve performance")
+  Container(auth, "Authentication Server", "Container: Keycloak", "Manages user authentication and authorization")
+  Container(docs, "Documentation Site", "Container: VitePress", "Hosts public documentation for Mirai users and contributors")
+  Container(blob, "Blob Storage", "Container: Azure Blob Storage", "Stores uploaded files such as attachments, images, and documents")
+}
+
+' Define external systems
+System_Ext(emailService, "Email System", "Delivers transactional and notification emails to users")
+System_Ext(azureSignalR, "Azure SignalR Service", "Real-time messaging backplane for SignalR clients in a distributed environment")
+
+' Relationships
+Rel(user, webApp, "Visits miraihq.com using", "HTTPS")
+Rel(webApp, spa, "Delivers to the user's web browser")
+Rel(user, spa, "Interacts with", "HTTPS/JSON + WebSocket")
+
+Rel(spa, api, "Make API calls to", "JSON/HTTPS")
+Rel(spa, azureSignalR, "Receives real-time updates from", "WebSocket")
+
+Rel(api, db, "Reads from and writes to", "SQL/TCP")
+Rel(api, redisCache, "Reads from and writes to", "Key/Value")
+Rel(api, azureSignalR, "Publishes updates to", "SignalR SDK")
+Rel(api, auth, "Make API calls to", "JSON/HTTPS")
+Rel(api, emailService, "Sends email via", "SMTP/HTTPS")
+Rel(api, blob, "Make API calls to", "HTTPS")
+
+Rel(user, docs, "Visits docs.miraihq.com using", "HTTPS")
+
+@enduml

@@ -1,0 +1,191 @@
+Table board_cards {
+  id uuid [pk]
+  board_column_id uuid [ref: > board_columns.id]
+  work_item_id uuid [ref: > work_items.id]
+  position integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table board_columns {
+  id uuid [pk]
+  board_id uuid [ref: > boards.id]
+  name varchar(255)
+  position integer
+  wip_limit integer
+  definition_of_done varchar(255)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table boards {
+  id uuid [pk]
+  team_id uuid [ref: > teams.id]
+  name varchar(255)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table organization_members {
+  id uuid [pk]
+  organization_id uuid [ref: > organizations.id]
+  member_id uuid [ref: > users.id]
+}
+
+Table organizations {
+  id uuid [pk]
+  name varchar(255) [unique]
+  description varchar(500)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table projects {
+  id uuid [pk]
+  name varchar(255)
+  description text
+  organization_id uuid [ref: > organizations.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table retrospective_columns {
+  id uuid [pk]
+  title varchar(255)
+  position integer
+  retrospective_id uuid [ref: > retrospectives.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table retrospective_items {
+  id uuid [pk]
+  content text
+  position integer
+  votes integer
+  retrospective_column_id uuid [ref: > retrospective_columns.id]
+  author_id uuid [ref: > users.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table retrospectives {
+  id uuid [pk]
+  title varchar(255)
+  max_votes_per_user integer
+  team_id uuid [ref: > teams.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table sprints {
+  id uuid [pk]
+  team_id uuid [ref: > teams.id]
+  name varchar(255)
+  start_date timestamp
+  end_date timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table tags {
+  id uuid [pk]
+  name varchar(50)
+  description varchar(500)
+  color varchar(7)
+  project_id uuid [ref: > projects.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table team_members {
+  id uuid [pk]
+  team_id uuid [ref: > teams.id]
+  user_id uuid [ref: > users.id]
+  created_at timestamp
+}
+
+Table teams {
+  id uuid [pk]
+  project_id uuid [ref: > projects.id]
+  name varchar(255)
+  description varchar(500)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table users {
+  id uuid [pk]
+  first_name varchar(50)
+  last_name varchar(50)
+  email varchar(255) [unique]
+  identity_id uuid
+  image_url varchar(512)
+  team_id uuid [ref: > teams.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table wiki_page_comments {
+  id uuid [pk]
+  wiki_page_id uuid [ref: > wiki_pages.id]
+  author_id uuid [ref: > users.id]
+  content text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table wiki_page_views {
+  id uuid [pk]
+  wiki_page_id uuid [ref: > wiki_pages.id]
+  viewed_at timestamp
+  viewer_id uuid [ref: > users.id]
+}
+
+Table wiki_pages {
+  id uuid [pk]
+  project_id uuid [ref: > projects.id]
+  title varchar(255)
+  content text
+  position integer
+  author_id uuid [ref: > users.id]
+  parent_wiki_page_id uuid [ref: > wiki_pages.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table work_item_comments {
+  id uuid [pk]
+  work_item_id uuid [ref: > work_items.id]
+  user_id uuid [ref: > users.id]
+  content text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table work_item_tags {
+  id uuid [pk]
+  tag_id uuid [ref: > tags.id]
+  work_item_id uuid [ref: > work_items.id]
+}
+
+Table work_items {
+  id uuid [pk]
+  code integer
+  title varchar(100)
+  description text
+  acceptance_criteria text
+  type varchar(50)
+  status varchar(50)
+  search_vector vector
+  assignee_id uuid
+  project_id uuid [ref: > projects.id]
+  assigned_team_id uuid [ref: > teams.id]
+  parent_work_item_id uuid [ref: > work_items.id]
+  sprint_id uuid [ref: > sprints.id]
+  classification_value_area text 
+  planning_priority integer
+  planning_story_points integer
+  created_at timestamp
+  updated_at timestamp
+}

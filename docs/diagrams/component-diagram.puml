@@ -1,0 +1,72 @@
+@startuml "component-diagram"
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+' External containers
+Container(spa, "Single-Page Application", "Container: JavaScript and Vue.js", "Provides all of the project management functionalities to users via their web browser")
+
+' External systems
+Component_Ext(keycloak, "Identity Provider", "External System: Keycloak", "Manages user authentication and authorization")
+Component_Ext(blobStorage, "Blob Storage", "External System: Azure Blob Storage", "Stores static files")
+Component_Ext(resend, "Email System", "External System: Resend", "Sends transactional emails")
+
+' Databases
+ContainerDb(postgresDb, "Database", "Container: PostgreSQL Database Schema", "Stores user registration information and other application-related data")
+
+Container_Boundary(apiApp, "API Application (.NET 9)") {
+  Component(usersController, "Users Controller", "Component: ASP.NET Controller", "Handles user-related API requests")
+  Component(mediator, "MediatR", "Library", "Dispatches commands and queries to their respective handlers")
+  Component(loggingBehavior, "Logging Behavior", "Pipeline Behavior", "Logs execution details of requests")
+  Component(validationBehavior, "Validation Behavior", "Pipeline Behavior", "Validates commands and queries")
+  Component(queryCachingBehavior, "Query Caching Behavior", "Pipeline Behavior", "Caches query results")
+  Component(unitOfWorkBehavior, "Unit of Work Behavior", "Pipeline Behavior", "Manages database transactions")
+
+  Component(registerUserCommand, "Register User Command Handler", "Command", "Registers a new user")
+  Component(loginUserQuery, "Login User Query Handler", "Query", "Logs a user in")
+  Component(GetCurrentUserQuery, "Get Current User Query Handler", "Query", "Fetches the authenticated user")
+  Component(UpdateUserProfileCommand, "Update User Profile Command Handler", "Command", "Updates user profile")
+  Component(UpdateUserProfilePictureCommand, "Update User Profile Picture Command Handler", "Command", "Updates user profile picture")
+
+  Component(blobService, "Blob Service", "Service", "Provides functionality related to file storage")
+  Component(authenticationService, "Authentication Service", "Service", "Provides functionality related to user creation on the identity provider")
+  Component(jwtService, "JWT Service", "Service", "Generates JSON Web Tokens")
+  Component(emailService, "Email Service", "Service", "Sends e-mails to users")
+  Component(userRepository, "UserRepository", "Repository", "Reads and writes user data from/to the database")
+}
+
+' Relationships
+Rel(spa, usersController, "Makes API calls to", "JSON/HTTPS")
+Rel(usersController, mediator, "Sends commands/queries")
+
+Rel(mediator, loggingBehavior, "Intercepted by")
+Rel(loggingBehavior, validationBehavior, "Intercepted by")
+Rel(validationBehavior, queryCachingBehavior, "Intercepted by")
+Rel(queryCachingBehavior, unitOfWorkBehavior, "Intercepted by")
+
+Rel(unitOfWorkBehavior, registerUserCommand, "Dispatches")
+Rel(unitOfWorkBehavior, loginUserQuery, "Dispatches")
+Rel(unitOfWorkBehavior, GetCurrentUserQuery, "Dispatches")
+Rel(unitOfWorkBehavior, UpdateUserProfileCommand, "Dispatches")
+Rel(unitOfWorkBehavior, UpdateUserProfilePictureCommand, "Dispatches")
+
+Rel(registerUserCommand, userRepository, "Uses")
+Rel(loginUserQuery, userRepository, "Uses")
+Rel(GetCurrentUserQuery, userRepository, "Uses")
+Rel(UpdateUserProfileCommand, userRepository, "Uses")
+Rel(UpdateUserProfilePictureCommand, userRepository, "Uses")
+Rel(userRepository, postgresDb, "Reads from and writes to", "SQL/TCP")
+
+Rel(registerUserCommand, authenticationService, "Uses")
+Rel(authenticationService, keycloak, "Makes API calls to", "JSON/HTTPS")
+
+Rel(loginUserQuery, jwtService, "Uses")
+Rel(jwtService, keycloak, "Makes API calls to", "JSON/HTTPS")
+
+Rel(loginUserQuery, emailService, "Uses")
+Rel(emailService, resend, "Makes API calls to", "HTTP/JSON")
+
+Rel(UpdateUserProfilePictureCommand, blobService, "Uses")
+Rel(blobService, blobStorage, "Makes API calls to", "JSON/HTTPS")
+
+@enduml
