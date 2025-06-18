@@ -1,0 +1,154 @@
+@startuml
+title Mirai - Use Case Diagram
+
+left to right direction
+
+actor Admin
+actor ScrumMaster
+actor TeamMember
+actor User
+
+package "Organizations" {
+    usecase "Create Organization" as UC1
+    usecase "Delete Organization" as UC2
+    usecase "Update Organization" as UC3
+    usecase "Get Organization" as UC4
+    usecase "List Organizations" as UC5
+
+    Admin --> UC1
+    Admin --> UC2
+    Admin --> UC3
+    Admin --> UC4
+    Admin --> UC5
+}
+
+package "Projects" {
+    usecase "Create Project" as UC6
+    usecase "Update Project" as UC7
+    usecase "Get Project" as UC8
+    usecase "List Projects" as UC9
+
+    Admin --> UC6
+    Admin --> UC7
+    Admin --> UC8
+    Admin --> UC9
+    TeamMember --> UC6
+    TeamMember --> UC7
+    TeamMember --> UC8
+    TeamMember --> UC9
+}
+
+package "Boards" {
+    usecase "Create Board" as UC10
+    usecase "Delete Board" as UC11
+    usecase "Move Card" as UC12
+    usecase "Create Card" as UC13
+    usecase "List Boards" as UC14
+
+    ScrumMaster --> UC10
+    ScrumMaster --> UC11
+    ScrumMaster --> UC12
+    ScrumMaster --> UC13
+    ScrumMaster --> UC14
+    TeamMember --> UC13
+    TeamMember --> UC14
+}
+
+package "Retrospectives" {
+    usecase "Create Retrospective" as UC15
+    usecase "Get Retrospective" as UC16
+    usecase "List Retrospectives" as UC17
+
+    ScrumMaster --> UC15
+    ScrumMaster --> UC16
+    ScrumMaster --> UC17
+    TeamMember --> UC17
+}
+
+package "Personas" {
+    usecase "Create Persona" as UC18
+    usecase "Update Persona" as UC19
+    usecase "Delete Persona" as UC20
+    usecase "Get Persona" as UC21
+    usecase "List Personas" as UC22
+
+    Admin --> UC18
+    Admin --> UC19
+    Admin --> UC20
+    Admin --> UC21
+    Admin --> UC22
+    TeamMember --> UC21
+    TeamMember --> UC22
+}
+
+package "Users" {
+    usecase "Register User" as UC23
+    usecase "Login User" as UC24
+    usecase "Update User Profile" as UC25
+    usecase "Get Current User" as UC26
+    usecase "Update User Profile Picture" as UC27
+
+    User --> UC23
+    User --> UC24
+    User --> UC25
+    User --> UC26
+    User --> UC27
+}
+
+package "Sprints" {
+    usecase "Create Sprint" as UC28
+    usecase "List Sprints" as UC29
+    usecase "Add Work Item to Sprint" as UC30
+
+    ScrumMaster --> UC28
+    ScrumMaster --> UC29
+    ScrumMaster --> UC30
+    TeamMember --> UC30
+}
+
+package "Tags" {
+    usecase "Create Tag" as UC31
+    usecase "Delete Tag" as UC32
+    usecase "Delete Tags" as UC33
+    usecase "Merge Tags" as UC34
+    usecase "Update Tag" as UC35
+    usecase "Export Tags" as UC36
+    usecase "List Tags" as UC37
+
+    Admin --> UC31
+    Admin --> UC32
+    Admin --> UC33
+    Admin --> UC34
+    Admin --> UC35
+    Admin --> UC36
+    Admin --> UC37
+    TeamMember --> UC37
+}
+
+package "Work Items" {
+    usecase "Add Work Item Comment" as UC38
+    usecase "Add Tag" as UC39
+    usecase "Assign Work Item" as UC40
+    usecase "Create Work Item" as UC41
+    usecase "Delete Work Item" as UC42
+    usecase "Remove Tag" as UC43
+    usecase "Get Work Item" as UC44
+    usecase "Get WorkItemsStats" as UC45
+    usecase "List Work Items" as UC46
+    usecase "Search Work Items" as UC47
+
+    Admin --> UC41
+    Admin --> UC42
+    TeamMember --> UC38
+    TeamMember --> UC39
+    TeamMember --> UC40
+    TeamMember --> UC41
+    TeamMember --> UC42
+    TeamMember --> UC43
+    TeamMember --> UC44
+    TeamMember --> UC45
+    TeamMember --> UC46
+    TeamMember --> UC47
+}
+
+@enduml

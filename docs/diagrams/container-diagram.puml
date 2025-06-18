@@ -1,5 +1,6 @@
 @startuml "container-diagram"
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+title Container Diagram for Mirai
 
 LAYOUT_WITH_LEGEND()
 
@@ -13,9 +14,10 @@ System_Boundary(miraiBoundary, "Mirai") {
   Container(api, "API Application", "Container: C# and .NET 9", "Provides project management functionalities via a RESTful API")
   Container(db, "Database", "Container: PostgreSQL", "Stores users, projects, work items, wiki pages, retrospectives, etc.")
   Container(redisCache, "Cache Store", "Container: Redis", "Caches frequent queries to improve performance")
-  Container(auth, "Authentication Server", "Container: Keycloak", "Manages user authentication and authorization")
+  Container(auth, "Identity Provider", "Container: Keycloak", "Manages user authentication and authorization")
   Container(docs, "Documentation Site", "Container: VitePress", "Hosts public documentation for Mirai users and contributors")
   Container(blob, "Blob Storage", "Container: Azure Blob Storage", "Stores uploaded files such as attachments, images, and documents")
+  Container(nlpService, "NLP Service", "Container: Python and FastAPI", "Provides natural language processing capabilities for project management tasks")
 }
 
 ' Define external systems
@@ -36,6 +38,7 @@ Rel(api, azureSignalR, "Publishes updates to", "SignalR SDK")
 Rel(api, auth, "Make API calls to", "JSON/HTTPS")
 Rel(api, emailService, "Sends email via", "SMTP/HTTPS")
 Rel(api, blob, "Make API calls to", "HTTPS")
+Rel(api, nlpService, "Makes API calls to", "JSON/HTTPS")
 
 Rel(user, docs, "Visits docs.miraihq.com using", "HTTPS")
 

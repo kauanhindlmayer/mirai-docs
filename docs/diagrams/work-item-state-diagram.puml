@@ -1,0 +1,42 @@
+@startuml "work-item-state-diagram"
+title Work Item State Diagram
+
+[*] --> New
+
+New --> Active : Start work
+Active --> Resolved : Work complete / ready for review
+Resolved --> Closed : Approve and close
+Active --> Closed : Skip review and close
+New --> Removed : Delete work item
+Active --> Removed : Delete work item
+Resolved --> Removed : Delete work item
+Closed --> Removed : Delete work item
+
+Closed --> Active : Reopen
+Resolved --> Active : Reopen for changes
+
+note right of New
+  Initial state
+  Work item created
+end note
+
+note right of Active
+  Work in progress
+end note
+
+note right of Resolved
+  Work done,
+  waiting for approval
+end note
+
+note right of Closed
+  Work finished
+  and accepted
+end note
+
+note right of Removed
+  Work item deleted
+  (soft delete)
+end note
+
+@enduml

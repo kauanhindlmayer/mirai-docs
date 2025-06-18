@@ -1,5 +1,6 @@
 @startuml "component-diagram"
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram for Mirai
 
 LAYOUT_WITH_LEGEND()
 

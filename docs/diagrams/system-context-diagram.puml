@@ -1,5 +1,6 @@
 @startuml "system-context-diagram"
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+title System Context Diagram for Mirai
 
 LAYOUT_WITH_LEGEND()
 
@@ -12,19 +13,21 @@ Person(admin, "Administrator", "Manages users, teams, and roles.")
 System(mirai, "Mirai", "Web-based project management tool for Agile teams.")
 
 ' External Systems
-System_Ext(keycloak, "Keycloak", "Manages user authentication and authorization.")
-System_Ext(emailService, "Email System", "Sends transactional and notification emails.")
+System_Ext(identityProvider, "Identity Provider", "Manages user authentication and authorization.")
+System_Ext(emailSystem, "Email System", "Sends transactional and notification emails.")
 System_Ext(signalR, "Azure SignalR Service", "Handles real-time updates across distributed clients.")
-System_Ext(blob, "Azure Blob Storage", "Stores uploaded files, images, and attachments.")
+System_Ext(blobStorage, "Blob Storage", "Stores uploaded files, images, and attachments.")
+System_Ext(nlpService, "NLP Service", "Provides semantic search and summarization capabilities to help users find and extract insights from work items and wiki pages.")
 
 ' Relationships
 Rel(teamMember, mirai, "Uses")
 Rel(scrumMaster, mirai, "Uses")
 Rel(admin, mirai, "Manages and configures")
 
-Rel(mirai, keycloak, "Authenticates via")
-Rel(mirai, emailService, "Sends emails via")
+Rel(mirai, identityProvider, "Authenticates via")
+Rel(mirai, emailSystem, "Sends emails via")
 Rel(mirai, signalR, "Pushes real-time updates via")
-Rel(mirai, blob, "Stores and retrieves files from")
+Rel(mirai, blobStorage, "Stores and retrieves files from")
+Rel(mirai, nlpService, "Processes queries and retrieves semantic insights from")
 
 @enduml
