@@ -14,6 +14,5 @@ To add users who already have a Mirai account:
 
 The added users will receive an email notification and will be able to access the project.
 
-## Important Note on New Users
-
-Currently, it is not possible to invite users who do not yet have a Mirai account. New users must first create an account before they can be added to a project.
+> [!NOTE]
+> Currently, it is not possible to invite users who do not yet have a Mirai account. New users must first create an account before they can be added to a project.

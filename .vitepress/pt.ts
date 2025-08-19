@@ -54,6 +54,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       items: [
         { text: "O que é Mirai?", link: "what-is-mirai" },
         { text: "Iniciando", link: "getting-started" },
+        { text: "Convidar Membros", link: "invite-members" },
       ],
     },
   ];

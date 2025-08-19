@@ -30,6 +30,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       items: [
         { text: "What is Mirai?", link: "what-is-mirai" },
         { text: "Getting Started", link: "getting-started" },
+        { text: "Invite Members", link: "invite-members" },
       ],
     },
   ];

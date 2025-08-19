@@ -14,6 +14,5 @@ Para adicionar usuários que já possuem uma conta Mirai:
 
 Os usuários adicionados receberão uma notificação por e-mail e poderão acessar o projeto.
 
-## Observação importante sobre novos usuários
-
-Atualmente, não é possível convidar usuários que ainda não possuem uma conta Mirai. Novos usuários devem primeiro criar uma conta antes de serem adicionados a um projeto.
+> [!NOTE]
+> Atualmente, não é possível convidar usuários que ainda não possuem uma conta Mirai. Novos usuários devem primeiro criar uma conta antes de serem adicionados a um projeto.
