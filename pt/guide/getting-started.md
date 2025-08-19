@@ -4,20 +4,32 @@
 
 ### Pré-requisitos
 
-- [Docker Compose](https://docs.docker.com/compose/).
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0).
+- [Docker](https://docs.docker.com/get-started/get-docker/).
 
 ### Steps
 
-1. Clone os repositórios:
+1. Clone o repositório:
 
 ```bash
 $ git clone git@github.com:kauanhindlmayer/mirai-api.git
-$ git clone git@github.com:kauanhindlmayer/mirai-embedding-api.git
 ```
 
-2. Entre no diretório `mirai-api` e inicie os serviços com Docker Compose:
+2. Entre no diretório `mirai-api`:
 
 ```bash
 $ cd mirai-api
-$ docker-compose up
+```
+
+3. Execute o script de configuração (substitua os espaços reservados pelos seus próprios segredos):
+
+```bash
+$ ./scripts/setup-secrets.sh   # Linux/macOS
+$ .\scripts\setup-secrets.ps1  # Windows
+```
+
+4. Inicie os serviços com .NET Aspire:
+
+```bash
+dotnet run --project ./src/AppHost/AppHost.csproj
 ```
