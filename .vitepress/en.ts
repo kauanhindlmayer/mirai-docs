@@ -30,7 +30,15 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       items: [
         { text: "What is Mirai?", link: "what-is-mirai" },
         { text: "Getting Started", link: "getting-started" },
-        { text: "Invite Members", link: "invite-members" },
+        { text: "Invite Members to Organization", link: "invite-members-to-organization" },
+        { text: "Invite Members to Project", link: "invite-members" },
+      ],
+    },
+    {
+      text: "Integrations",
+      collapsed: false,
+      items: [
+        { text: "MCP Server", link: "mcp-server" },
       ],
     },
   ];
