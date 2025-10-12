@@ -1,90 +1,60 @@
-# Servidor MCP
+# Servidor MCP Mirai
 
-O Servidor MCP Mirai permite que você use assistentes de IA como Claude e GitHub Copilot para interagir com seus projetos, itens de trabalho e páginas wiki do Mirai.
+O Servidor MCP Mirai permite que assistentes de IA interajam com a plataforma de gerenciamento de projetos Mirai através do Model Context Protocol (MCP).
 
 ## O que é MCP?
 
-Model Context Protocol (MCP) é um padrão aberto que conecta assistentes de IA a fontes de dados e ferramentas. Com o Servidor MCP Mirai, você pode pedir ao seu assistente de IA para ler e gerenciar seus dados do Mirai.
+O [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-started/intro) é um padrão aberto que define como modelos de linguagem podem se conectar a ferramentas e fontes de dados externas.
 
-## Ferramentas Disponíveis
-
-- **mirai_login** - Autentique-se com seu email e senha
-- **mirai_list_projects** - Liste organizações e projetos
-- **mirai_list_work_items** - Obtenha itens de trabalho com opções de filtragem
-- **mirai_get_work_item** - Obtenha detalhes de um item de trabalho específico
-- **mirai_create_work_item** - Crie Épicos, Histórias de Usuário, Funcionalidades ou Bugs
-- **mirai_list_wiki_pages** - Liste páginas wiki em um projeto
-- **mirai_get_wiki_page** - Obtenha conteúdo de página wiki
-- **mirai_create_wiki_page** - Crie novas páginas wiki
-
-## Configuração
-
-### 1. Instalar e Compilar
-
-Clone e compile o servidor MCP:
-
-```bash
-git clone https://github.com/kauanhindlmayer/mirai-mcp.git
-cd mirai-mcp
-npm install
-npm run build
-```
-
-### 2. Configurar Seu Assistente de IA
-
-#### Claude Code
-
-```bash
-claude mcp add mirai-mcp --scope user node /caminho/absoluto/para/mirai-mcp/dist/index.js
-```
-
-Depois reinicie o Claude Code.
-
-#### GitHub Copilot
-
-Crie `.vscode/mcp.json` no seu workspace:
-
-```json
-{
-  "servers": {
-    "mirai-mcp": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["/caminho/absoluto/para/mirai-mcp/dist/index.js"]
-    }
-  }
-}
-```
+Ele usa uma arquitetura cliente-servidor, onde o cliente (por exemplo, um assistente de IA) se comunica com um ou mais servidores que fornecem capacidades específicas.
 
 ## Uso
 
-Peça ao seu assistente de IA para interagir com o Mirai usando linguagem natural:
+Uma vez configurado, você pode pedir ao seu assistente de IA para executar ações no Mirai usando linguagem natural.
 
 **Autenticação**
+
 ```
 Faça login no Mirai
 ```
 
 **Projetos**
+
 ```
 Liste meus projetos Mirai
-Mostre projetos da organização de Engenharia
+Mostre projetos na organização X
 ```
 
 **Itens de Trabalho**
+
 ```
 Mostre bugs ativos no projeto X
 Crie uma história de usuário: "Adicionar modo escuro"
 Liste itens de trabalho atribuídos a mim
+Obtenha detalhes do item de trabalho #123
 ```
 
 **Wiki**
+
 ```
 Liste páginas wiki no projeto X
-Crie uma página wiki para diretrizes de API
+Mostre a página wiki de documentação da API
+Crie uma página wiki para diretrizes de implantação
 ```
 
-## Próximos Passos
+## Solução de Problemas
 
-- [Documentação do Model Context Protocol](https://modelcontextprotocol.io/)
-- [Reportar Problemas](https://github.com/kauanhindlmayer/mirai-mcp/issues)
+**Servidor não está conectando?**
+
+- Use um caminho absoluto, não um caminho relativo
+- Execute `npm run build` para garantir que o servidor foi compilado
+- Reinicie seu assistente de IA após a configuração
+
+**Falha na autenticação?**
+
+- Verifique suas credenciais do Mirai
+- Certifique-se de que sua conta está ativa
+
+## Recursos
+
+- [Repositório do Servidor MCP Mirai](https://github.com/kauanhindlmayer/mirai-mcp)
