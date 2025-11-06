@@ -10,9 +10,6 @@ hero:
       text: What is Mirai?
       link: /en/guide/what-is-mirai
     - theme: alt
-      text: Quick Start
-      link: /en/guide/getting-started
-    - theme: alt
       text: GitHub
       link: https://github.com/kauanhindlmayer/mirai-api
 ---
